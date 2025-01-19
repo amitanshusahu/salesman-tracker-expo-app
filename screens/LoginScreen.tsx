@@ -1,43 +1,50 @@
-import { getMe } from "@/lib/http/quries";
-import { useUserStore } from "@/state";
-import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
-import { Button, SafeAreaView, Text, TextInput, View } from "react-native";
+import { postLogin } from "@/lib/http/mutations";
+import { useMutation } from "@tanstack/react-query";
+import { Link } from "expo-router";
+import { useState } from "react";
+import { Button, NativeSyntheticEvent, SafeAreaView, Text, TextInput, TextInputChangeEventData, View } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AppConfig } from "@/constants/AppConfig";
 
 export default function LoginScreen() {
 
-  const {setIsLogedIn, isLogedIn} = useUserStore();
-  const loginQuery = useQuery({
-    queryKey: ['me'],
-    queryFn: getMe,
-    enabled: !isLogedIn,
-    retry: false,
+  const [email, setEmail] = useState<string>();
+  const [password, setPassword] = useState<string>();
+  const loginMutation = useMutation({
+    mutationFn: postLogin,
+    onSuccess: async (data) => {
+      console.log(data);
+      await AsyncStorage.setItem(AppConfig.TOKEN_NAME, JSON.stringify(data));
+    },
+    onError: (error) => {
+      console.log(error.stack);
+    }
   })
 
-  useEffect( () => {
-    if(!isLogedIn && loginQuery.isSuccess && loginQuery.data) {
-      console.log(loginQuery.data);
-      setIsLogedIn(true);
-    }
-    if(loginQuery.data) {
-      console.log(loginQuery.data);
-    }
-    if(loginQuery.isError) {
-      console.log(loginQuery.error.stack);
-    }
-  }, []);
-
   const handleLoginPress = () => {
+    console.log(email, password);
+    if (email && password) {
+      loginMutation.mutate({ email, password });
+    }
+  }
 
+  const handleInputEmailChange = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
+    setEmail(e.nativeEvent.text);
+  }
+
+  const handleInputPasswordChange = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
+    setPassword(e.nativeEvent.text);
   }
 
   return (
     <SafeAreaView>
       <View>
         <Text>Login Screen</Text>
-        <TextInput placeholder="UID" />
+        <TextInput placeholder="email" onChange={handleInputEmailChange} />
+        <TextInput placeholder="password" onChange={handleInputPasswordChange} />
         <Button title="Login" onPress={handleLoginPress} />
-        <Text>login now</Text>
+        <Text>login sataus: </Text>
+        <Link href={"/explore"}> Register </Link>
       </View>
     </SafeAreaView>
   )

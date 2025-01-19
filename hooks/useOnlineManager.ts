@@ -4,7 +4,6 @@ import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 import { useUserStore } from '@/state';
 
 export function useOnlineManager() {
-  console.log('useOnlineManager hook invoked');
   const { setIsOnline } = useUserStore();
 
   useEffect(() => {
