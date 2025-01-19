@@ -37,15 +37,13 @@ export default function LoginScreen() {
   }
 
   return (
-    <SafeAreaView>
-      <View>
-        <Text>Login Screen</Text>
-        <TextInput placeholder="email" onChange={handleInputEmailChange} />
-        <TextInput placeholder="password" onChange={handleInputPasswordChange} />
-        <Button title="Login" onPress={handleLoginPress} />
-        <Text>login sataus: </Text>
-        <Link href={"/explore"}> Register </Link>
-      </View>
-    </SafeAreaView>
+    <View>
+      <Text>Login Screen</Text>
+      <TextInput placeholder="email" onChange={handleInputEmailChange} />
+      <TextInput placeholder="password" onChange={handleInputPasswordChange} />
+      <Button title="Login" onPress={handleLoginPress} />
+      <Text>login sataus: </Text>
+      <Link href={"/explore"}> Register </Link>
+    </View>
   )
 }

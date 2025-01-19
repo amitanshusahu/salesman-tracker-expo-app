@@ -7,7 +7,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import Start from '@/screens/Start';
+import Start from './screens/Start';
 SplashScreen.preventAutoHideAsync();
 
 
