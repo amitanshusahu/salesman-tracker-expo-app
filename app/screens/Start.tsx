@@ -15,29 +15,29 @@ export default function Start() {
   const colorScheme = useColorScheme();
   const { setIsLogedIn, isLogedIn } = useUserStore();
 
-  // const loginQuery = useQuery({
-  //   queryKey: ['tryme'],
-  //   queryFn: getMe,
-  //   enabled: !isLogedIn,
-  //   retry: false,
-  // })
+  const loginQuery = useQuery({
+    queryKey: ['tryme'],
+    queryFn: getMe,
+    enabled: !isLogedIn,
+    retry: false,
+  })
 
-  // useEffect(() => {
-  //   if (loginQuery.isSuccess) {
-  //     console.log(loginQuery.data);
-  //     setIsLogedIn(true);
-  //   }
-  //   if (loginQuery.isError) {
-  //     console.log(loginQuery.error.stack);
-  //   }
-  //   if (loginQuery.isLoading) {
-  //     console.log('loading');
-  //   }
-  //   if (loginQuery.data) {
-  //     console.log(loginQuery.data);
-  //   }
+  useEffect(() => {
+    if (loginQuery.isSuccess) {
+      console.log(loginQuery.data);
+      setIsLogedIn(true);
+    }
+    if (loginQuery.isError) {
+      console.log(loginQuery.error.stack);
+    }
+    if (loginQuery.isLoading) {
+      console.log('loading');
+    }
+    if (loginQuery.data) {
+      console.log(loginQuery.data);
+    }
 
-  // }, [setIsLogedIn, loginQuery.data]);
+  }, [setIsLogedIn, loginQuery.data]);
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>

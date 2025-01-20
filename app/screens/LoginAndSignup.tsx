@@ -1,7 +1,38 @@
 import Button from "@/components/ui/Button";
+import { useState } from "react";
 import { Text, View, StyleSheet } from "react-native";
+import LoginScreen from "./Login";
+import SignupScreen from "./Signup";
 
 export default function LoginAndSignup() {
+  const [render, setRender] = useState(
+    <View style={{
+      width: "100%",
+      gap: 20,
+      padding: 30,
+    }}>
+      <Button
+        title="Login"
+        btnStyle={styles.loginButton}
+        textStyle={styles.loginbuttonText}
+        onPress={() => setRender(<LoginScreen setRender={setRender}/>)}
+      />
+      <View style={{ height: 20 }}>
+        <View
+          style={{
+            borderBottomColor: 'white',
+            borderBottomWidth: StyleSheet.hairlineWidth,
+          }}
+        />
+      </View>
+      <Button
+        title="Signup"
+        btnStyle={styles.signupButton}
+        textStyle={styles.signupButtonText}
+        onPress={() => setRender(<SignupScreen setRender={setRender}/>)}
+      />
+    </View>
+  );
   return (
     <View style={styles.container}>
       <View style={styles.headingHolder}>
@@ -9,26 +40,7 @@ export default function LoginAndSignup() {
         <Text style={{ fontSize: 40, fontWeight: 'bold', color: 'white' }}>Track</Text>
         <Text style={{ fontSize: 14, color: 'white' }}>we track sales this is just a prototype application</Text>
       </View>
-      <View style={styles.buttonHolder}>
-          <Button
-            title="Login"
-            btnStyle={styles.loginButton}
-            textStyle={styles.loginbuttonText}
-          />
-        <View style={{ height: 20 }}>
-          <View
-            style={{
-              borderBottomColor: 'white',
-              borderBottomWidth: StyleSheet.hairlineWidth,
-            }}
-          />
-        </View>
-          <Button
-            title="Signup"
-            btnStyle={styles.signupButton}
-            textStyle={styles.signupButtonText}
-          />
-      </View>
+      {render}
     </View>
   )
 }
@@ -40,14 +52,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#2b7cff",
     justifyContent: "flex-end",
     alignItems: "baseline",
-    padding: 30
   },
   headingHolder: {
-    marginBottom: 50
+    marginBottom: 50,
+    padding: 30,
   },
   buttonHolder: {
     width: "100%",
-    gap: 20
+    gap: 20,
+    padding: 30,
   },
   loginButton: {
     width: "100%"
@@ -59,7 +72,7 @@ const styles = StyleSheet.create({
     borderColor: "white",
     borderWidth: 2,
     backgroundColor: "transparent",
-    width: "100%"
+    width: "100%",
   },
   signupButtonText: {
     color: "white"
